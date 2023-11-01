@@ -1,0 +1,89 @@
+{% extends "base.html" %}
+{% block start%}
+
+
+        <form class="col-6 mx-auto card p-3 shadow-lg bg-dark text-white" method="post" enctype="multipart/form-data">
+          {% csrf_token %}
+          <h2 class="text-light">Register new account</h2>
+          <hr style="background-color: #555;">
+      
+          {% if messages %}
+          <div class="alert alert-primary" role="alert">
+              {% for message in messages %}
+                {{ message }}
+              {% endfor %}
+          </div>
+          {% endif %}
+      
+          <div class="mb-3">
+              <label for="first_name" class="text-light">First Name</label>
+              <input name="first_name" type="text" required class="form-control bg-dark text-light" id="first_name">
+          </div>
+          <div class="mb-3">
+              <label for="last_name" class="text-light">Last Name</label>
+              <input name="last_name" type="text" required class="form-control bg-dark text-light" id="last_name">
+          </div>
+          <div class="mb-3">
+              <label for="email" class="text-light">Email Id</label>
+              <input name="email" type="email" required class="form-control bg-dark text-light" id="email">
+          </div>
+          <div class="mb-3">
+              <label for="username" class="text-light">Username</label>
+              <input name="username" type="text" required class="form-control bg-dark text-light" id="username">
+          </div>
+          <div class="mb-3">
+              <label for="password" class="text-light">Password</label>
+              <input name="password" type="password" required class="form-control bg-dark text-light" id="password">
+          </div>
+          <p class="text-light">Already have an account? <a href="/login/" style="color: var(--primary-color);" >Login instead</a></p>
+          <button class="btn btn-outline-dark" style="background-color: var(--primary-color); font-weight: bold;" type="submit">Register</button>
+      </form>
+ 
+   
+      
+<!-- 
+
+        <form class="col-6 mx-auto card p-3 shadow-lg" method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            <h2>Register new account</h2>
+            <hr>
+
+            {% if messages %}
+            {{message.tags}}
+            <div class="alert alert-primary" role="alert">
+                {% for message in messages %}
+                  {{ message  }}
+                {% endfor %}
+            </div>
+            {% endif %}
+            
+            
+            <div class="mb-3">
+                <label for="exampleInputEmail1">First Name</label>
+                <input name="first_name" type="text" required class="form-control"  >
+            </div>
+            <div class="mb-3">
+                <label for="exampleInputEmail1">Last Name</label>
+                <input name="last_name" type="text" required class="form-control"  >
+            </div>
+              <div class="mb-3">
+                <label for="exampleInputEmail1">Email Id</label>
+                <input name="email" type="email" required class="form-control"  >
+            </div>
+            <div class="mb-3">
+              <label for="exampleInputEmail1">Username</label>
+              <input name="username" type="text" required class="form-control"  >
+            </div>
+            <div class="mb-3">
+              <label for="exampleInputEmail1" >Password</label>
+              <input name="password" type="text" required class="form-control" >
+            </div>
+            <p style="align-items: center;">Already have an account?<a href="/login/" >Login instead</a></p> 
+            <button type="submit" class="btn btn-primary">Register</button>
+        </form>
+
+          <hr>
+          <br> -->
+
+
+{%endblock%}

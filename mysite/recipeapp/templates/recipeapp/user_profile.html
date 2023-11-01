@@ -1,0 +1,65 @@
+{% extends "base.html" %}
+{% block start %}
+
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-6">
+                <div class="card bg-dark text-white p-4">
+                    <div class="card-body">
+                        <h5 class="card-title">Hi {{user.first_name}} {{user.last_name}}!</h5>
+                        <p class="card-text">Here's your personal vault of recipes</p>
+                        <hr class="bg-light">
+                        <p class="card-text"><strong>Username: </strong> {{user.username}}</p>
+                        <p class="card-text"><strong>Email: </strong> {{user.email}}</p>
+                        <p class="card-text"><strong>Joined:</strong> {{user.date_joined}}</p>
+                        <p class="card-text"><strong>Last Login:</strong> {{user.last_login}}</p>
+                        <p class="card-text"><strong>Recipe Count:</strong> {{numrecipes}}</p>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <br>
+    <hr style="background-color: #4e4e4e;">
+    <h2 class="text-center text-light">{{title}}</h2>
+    <br>
+
+    <div class="text-center m-2">
+        <form method="get">
+            <select id="options" name="option_display" class="bg-dark text-light  ">
+                <option value="1">My Recipes</option>
+                <option value="2">Private Recipes</option>
+                <option value="3">Public Recipes</option>
+            </select>
+            <button type="submit" class="text-light bg-dark">Apply</button>
+        </form>
+    </div>
+
+    <div class="container">
+        <div class="row">
+          {% for x in myrecipes %}
+          <div class="col-12 col-md-6 col-lg-4">
+            <div class="card bg-dark text-white mb-3">
+              <!-- <img class="card-img-top" src="images_db/{{ x.recipe_image }}" style="height: 200px; object-fit: cover;"> -->
+              
+              <div class="card-body">
+                <h5><a href="/recipe_full/{{ x.id }}" class="card-title " style="color: var(--primary-color);">{{ x.recipe_name }}</a></h5>
+                <hr class="bg-light">
+                <p class="card-text small overflow-auto" style="max-height: 100px;">{{ x.recipe_description }}</p>
+              </div>
+              {% if request.user.is_authenticated %}
+                <div class="card-footer text-center">
+                  <a href="/delete-recipe/{{ x.id }}" class="btn btn-outline-danger btn-sm m-1" style="color: var(--primary-color); border-color: var(--primary-color);">Delete</a>
+                  <a href="/update-recipe/{{ x.id }}" class="btn btn-outline-primary btn-sm m-1 " style="color: var(--primary-color); border-color: var(--primary-color);" >Update</a>
+                </div>
+              {% endif %}
+            </div>
+          </div>
+          {% endfor %}
+        </div>
+      </div>
+    
+
+{% endblock  %}

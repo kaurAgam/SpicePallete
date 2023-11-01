@@ -1,0 +1,64 @@
+{% extends "base.html" %}
+{% block start %}
+
+<form class="col-6 mx-auto card p-3 shadow-lg bg-dark text-white" method="post" enctype="multipart/form-data">
+  {% csrf_token %}
+  <h2 class="text-light">Login to your account</h2>
+  <hr style="background-color: #555;">
+
+  {% if messages %}
+  {{message.tags}}
+  <div class="alert alert-primary" role="alert">
+      {% for message in messages %}
+        {{ message }}
+      {% endfor %}
+  </div>
+  {% endif %}
+
+  <div class="mb-3">
+    <label for="exampleInputEmail1" class="text-light">Username</label>
+    <input name="username" type="text" required class="form-control bg-dark text-light">
+  </div>
+  <div class="mb-3">
+    <label for="exampleInputEmail1" class="text-light">Password</label>
+    <input name="password" type="password" required class="form-control bg-dark text-light">
+  </div>
+  <p class="text-light">Don't have an account? <a href="/register/" style="color: var(--primary-color);">Register here</a></p>
+  <button class="btn btn-outline-dark" style="background-color: var(--primary-color); font-weight: bold;" type="submit">Login</button>
+</form>
+
+<hr style="background-color: #555;">
+<br>
+<!-- 
+        <form class="col-6 mx-auto card p-3 shadow-lg" method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            <h2>Login to your account</h2>
+            <hr>
+
+            {% if messages %}
+            {{message.tags}}
+            <div class="alert alert-primary" role="alert">
+                {% for message in messages %}
+                  {{ message  }}
+                {% endfor %}
+            </div>
+            {% endif %}
+
+
+            <div class="mb-3">
+              <label for="exampleInputEmail1">Username</label>
+              <input name="username" type="text" required class="form-control"  >
+            </div>
+            <div class="mb-3">
+              <label for="exampleInputEmail1" >Password</label>
+              <input name="password" type="text" required class="form-control" >
+            </div>
+            <p style="align-items: center;">Don't have an account?<a href="/register/" >Register here</a></p> 
+            <button type="submit" class="btn btn-primary">login</button>
+          </form>
+
+          <hr>
+          <br> -->
+
+
+{%endblock%}

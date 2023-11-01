@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+{% block start%}
+
+<form class="col-6 mx-auto card bg-dark text-white p-3 shadow-lg" method="post" enctype="multipart/form-data">
+  {% csrf_token %}
+  <h2 class="text-white">Update Recipe</h2>
+  <hr class="bg-light">
+  <div class="mb-3">
+      <label for="exampleInputEmail1" class="text-white">Edit Recipe Name</label>
+      <input name="recipe_name" type="text" value="{{obj.recipe_name}}" class="form-control" placeholder="Enter recipe name">
+  </div>
+  <div class="mb-3">
+      <label for="exampleInputPassword1" class="text-white">Edit Description</label>
+      <textarea class="form-control" required name="recipe_description" placeholder="Enter recipe description">{{obj.recipe_description}}</textarea>
+  </div>
+  <div class="mb-3">
+      <label for="exampleInputPassword1" class="text-white">Replace Image</label>
+      <input name="recipe_image" type="file" class="form-control" placeholder="Upload image">
+  </div>
+  
+  <button class="btn btn-outline-dark" style="background-color: var(--primary-color); font-weight: bold;" type="submit">Update</button>
+</form>
+
+<br>
+<!-- 
+
+        <form class="col-6 mx-auto card p-3 shadow-lg" method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            <h2>Update Recipe</h2>
+            <hr>
+            <div class="mb-3">
+              <label for="exampleInputEmail1">Edit recipe Name</label>
+              <input name="recipe_name" type="text" value="{{obj.recipe_name}}" class="form-control" placeholder="Enter recipe name">
+            </div>
+            <div class="mb-3">
+              <label for="exampleInputPassword1" >Edit description</label>
+              <textarea class="form-control" required name="recipe_description" placeholder="Enter recipe description">{{obj.recipe_description}}</textarea>
+            </div>
+            <div class="mb-3">
+                <label for="exampleInputPassword1">Replace Image</label>
+                <input name="recipe_image" type="file" class="form-control" placeholder="Upload image">
+            </div>
+            <button type="submit" class="btn btn-primary">Update</button>
+          </form>
+
+          <br>
+ -->
+
+{%endblock%}

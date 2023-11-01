@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+{% block start%}
+
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card bg-dark text-white p-4">
+                <div class="card-body">
+                    <h4 class="card-title">{{obj.recipe_name}}</h4>
+                    <hr class="bg-light">
+                    <p class="card-text justify-content-around"><strong>Description: </strong> {{obj.recipe_description}}</p>
+                    <p class="card-text"><strong>Ingredients:</strong> 
+                        {% for ingredient in obj.recipe_ingredient.all %}
+                        {{ ingredient.name }},   
+                        {% endfor %}</p>
+                    <p class="card-text"><strong>Preperation Time:</strong> {{obj.recipe_time}} minutes</p>
+                    <p class="card-text"><strong>Recipe Hardness: </strong> {{obj.recipe_hardness}}</p>
+                    <p class="card-text"><strong>Added By:</strong> {{obj.user}}</p>
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<br>
+    
+
+{% endblock  %}
+
+C:\Users\HP\Django-workspace\mysite\recipeapp\images_db\travis.png

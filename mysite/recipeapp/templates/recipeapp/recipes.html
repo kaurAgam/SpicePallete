@@ -1,0 +1,291 @@
+{% extends "base.html" %}
+{% block start%}
+
+          <!-- SEARCH BAR starts-->
+          <!-- <form>
+            <div class="input-group mx-auto" style="width: 40vw;">
+              <input name="search " type="text" class="form-control" placeholder="search recipes" >  
+              <div class="input-group-append">
+                <button class="btn btn-primary" type="submit">Find</button>
+              </div>
+            </div>
+          </form> -->
+          <form>
+            <div class="input-group mx-auto justify-content-center" >
+
+                <div>
+                  <input name="search" type="text" >
+                </div> 
+
+              &nbsp;
+                <div>
+                  {% csrf_token %}
+                </div>
+                &nbsp;
+                <div>
+                  <button class="btn btn-outline-light btn-sm" type="submit" style="font-weight: bold;">Search</button>
+                </div>
+            </div>
+          </form>
+
+        
+        
+          <!-- SEARCH BAR ends-->
+
+          <br>
+          <h1 style="text-align: center;font-size: 5vw; color: var(--primary-color);">RECIPES</h1>
+          <br>
+  
+          <!-- RECIPES' cards starts-->
+          <!-- <div class="row col-10 mx-auto text-center ">
+            {% for x in recipes%}
+            <div class="col-sm-4">
+              <div class="card">
+                <img class="card-img-top" src="media/{{x.recipe_image}}" style="height: max(20px,27vh); object-fit: cover;">
+                <div class="card-body">
+                  <p style="font-size: min(2vw,18px); font-weight: bold;">{{x.recipe_name}}</p>
+                  <p class=" card-text small overflow-auto" style="height: max(20px,15vh);">{{x.recipe_description}}</p>
+                </div>
+                {% if request.user.is_authenticated %}
+                  <div class="p-2 border">
+                    <a href="/delete-recipe/{{x.id}}" class="card-link rounded p-1 text-primary" style="background-color:#0d6dfd45;">delete</a> 
+                    <a href="/update-recipe/{{x.id}}" class="card-link rounded p-1 text-primary" style="background-color:#0d6dfd45;">update</a>
+                  </div>
+                {%endif%}
+              </div>
+            </div>
+            {% endfor %} 
+          </div> -->
+
+          <div class="container">
+            <div class="row">
+              {% for x in recipes %}
+              <div class="col-12 col-md-6 col-lg-4">
+                <div class="card bg-dark text-white mb-3">
+                  <img class="card-img-top" src="media/{{ x.recipe_image }}" style="height: 200px; object-fit: cover;">
+                  <div class="card-body">
+                    <h5><a href="/recipe_full/{{ x.id }}" class="card-title " style="color: var(--primary-color);">{{ x.recipe_name }}</a></h5>
+                    <p class="card-text small overflow-auto" style="max-height: 100px;">{{ x.recipe_description }}</p>
+                  </div>
+                  <!-- {% if request.user.is_authenticated %}
+                    <div class="card-footer text-center">
+                      <a href="/delete-recipe/{{ x.id }}" class="btn btn-outline-danger btn-sm m-1" style="color: var(--primary-color); border-color: var(--primary-color);">Delete</a>
+                      <a href="/update-recipe/{{ x.id }}" class="btn btn-outline-primary btn-sm m-1 " style="color: var(--primary-color); border-color: var(--primary-color);" >Update</a>
+                    </div>
+                  {% endif %} -->
+                </div>
+              </div>
+              {% endfor %}
+            </div>
+          </div>
+          
+          <!-- RECIPES' cards endss-->
+
+          <br>
+
+          <!-- PAGINATION starts -->
+   
+          <nav class=" d-flex justify-content-center mx-auto text-center">
+            <ul class="pagination">
+
+              {% if recipes.has_previous %}
+              <li class="page-item ">
+                <a class="page-link" href="/?page=1" >first</a>
+              </li>
+              <li class="page-item ">
+                <a class="page-link" href="/?page={{recipes.previous_page_number}}" >prev</a>
+              </li>
+              {% else %}
+              <li class="page-item disabled ">
+                <a class="page-link" href="/" >first</a>
+              </li>
+              <li class="page-item disabled">
+                <a class="page-link" href="/" >prev</a>
+              </li>
+              {% endif %}
+
+              <li class="page-item ">
+                <a class="page-link text-dark" href="/">{{recipes.number}}<span class="sr-only"></span></a>
+              </li>
+
+              {% if recipes.has_next %}
+              <li class="page-item">
+                <a class="page-link" href="/?page={{recipes.next_page_number}}" >next</a>
+              </li>
+              <li class="page-item ">
+                <a class="page-link" href="/?page={{numpages}}" >last</a>
+              </li>
+              {% else %}
+              <li class="page-item disabled">
+                <a class="page-link" href="/" >next</a>
+              </li>
+              <li class="page-item disabled">
+                <a class="page-link" href="/" >last</a>
+              </li>
+              {% endif %}
+            </ul>
+          </nav>
+
+          <!-- PAGINATION ends-->
+
+          <br> 
+          <br>
+
+
+          <!-- ADD RECIPE form starts -->
+          {% if request.user.is_authenticated %}
+          <form class="col-6 mx-auto card p-3 shadow-lg bg-dark text-white" method="post" enctype="multipart/form-data">  
+            {% csrf_token %}
+            <h3  style="color: var(--primary-color);">Add New Recipe!</h3>
+            <hr style="background-color: #555;">
+            
+            <div class="mb-3">
+              <label for="exampleInputEmail1" class="text-light">Recipe Name</label>
+              <input name="recipe_name" type="text" required class="form-control bg-dark text-light" placeholder="Enter recipe name">
+            </div>
+            
+            <div class="mb-3">
+              <label for="exampleInputPassword1" class="text-light">Recipe description</label>
+              <textarea class="form-control bg-dark text-light" required name="recipe_description" placeholder="Enter recipe description"></textarea>
+            </div>
+        
+
+        
+            <div class="mb-3">
+              <label for="exampleInputPassword1" class="text-light">Preparation Time</label>
+              <input class="form-control bg-dark text-light" name="recipe_time" placeholder="Enter Preparation Time in minutes">
+            </div>
+            <div class="mb-3">
+              <label for="exampleInputPassword1" class="text-light">Recipe Hardness</label>
+              <input class="form-control bg-dark text-light" required name="recipe_hardness" placeholder="Enter Recipe Hardness">
+            </div>
+            <div class="mb-3">
+              <label for="exampleInputPassword1" class="text-light">Recipe Image</label>
+              <input name="recipe_image" type="file" class="form-control bg-dark text-light" placeholder="Upload image">
+            </div>
+           
+            {{form.as_p}}
+            <div class=" mb-3 form-check">
+              <input class="form-check-input" type="checkbox" id="recipe_private" name="recipe_private" >
+              <label class="form-check-label" for="recipe_private">Private Recipe</label>
+            </div>
+            <div class="mb-3 mx-auto">
+              {% csrf_token %}
+              <button class="btn btn-outline-dark" style="background-color: var(--primary-color); font-weight: bold;" type="submit">Add Recipe</button>
+            </div>
+          </form>
+        {% else %}
+          <div class="span12 text-center">
+            <a href="/login/" title="Login Required" class="btn btn-outline btn-sm m-1" style="color: var(--primary-color); border-color: var(--primary-color);" >Add/Update recipe</a>
+          </div>
+        {% endif %}
+        <!-- ADD RECIPE form ends -->
+
+          <!-- ADD RECIPE form starts -->
+          <!-- {% if request.user.is_authenticated %}
+
+            <form class="col-6 mx-auto card p-3 shadow-lg" method="post" enctype="multipart/form-data">
+              {% csrf_token %}
+              <h2>Add Recipe</h2>
+              <hr>
+             
+              <div class="mb-3">
+                <label for="exampleInputEmail1">Recipe Name</label>
+                <input name="recipe_name" type="text" required class="form-control" placeholder="Enter recipe name">
+              </div>
+            
+              <div class="mb-3">
+                <label for="exampleInputPassword1" >Recipe description</label>
+                <textarea class="form-control" required name="recipe_description" placeholder="Enter recipe description"></textarea>
+              </div>
+              <div class="mb-3 ">
+              {{form.as_p}}
+              </div>
+              <div class="mb-3">
+                <label for="exampleInputPassword1" >Recipe hardness</label>
+                <input class="form-control" required name="recipe_hardness" placeholder="Enter recipe description"></textarea>
+              </div>
+
+
+              <div class="mb-3">
+                <label for="exampleInputPassword1" >Preperation Time</label>
+                <input class="form-control"  name="recipe_time" placeholder="Enter Preperation Time in minutes"></textarea>
+              </div>
+
+
+
+              <div class="mb-3">
+                  <label for="exampleInputPassword1">Recipe Image</label>
+                  <input name="recipe_image" type="file" class="form-control" placeholder="Upload image">
+              </div>
+
+              <div class="mb-3">
+                  {% csrf_token %}
+                  <button class="btn btn-primary" type="submit">Add</button>
+              </div>
+
+            </form>
+
+          {%else%}
+
+            <div class="span12" style="text-align:center">
+              <a href="/login/" title="Login Required" class="btn btn-large btn-primary">Add/Update recipe</a>
+            </div>
+
+          {%endif%} -->
+          <!-- ADD RECIPE form ends -->
+          
+          <br>
+          <br>
+
+          <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+          <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+          
+          <script>
+            $("#id_recipe_ingredient").select2();
+            $("#id_ingredients").select2();
+
+          
+
+            $( function() { var availableTags = [{% for x in cuisines %} 
+                                                    "{{x.name}}", 
+                                                  {% endfor %} ]; 
+                            $( "#cuis" ).autocomplete({ source: availableTags  }); 
+                          } );
+
+          </script> 
+          <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  
+
+
+<!-- 
+             $( function() { var availableTags = [{% for abc in ingredients %} 
+                                                     "{{abc.name}}", 
+                                                   {% endfor %} ]; 
+                             $( "#ingg" ).autocomplete({ source: availableTags  }); 
+                             } );           
+ <div id="myDropdown" class="dropdown-content">
+   <input type="text" placeholder="Enter Ingredients" id="myInput" onkeyup="filterFunction()">
+   {% for x in ingredients %}
+   <option>{{x.name}}</option>
+   {% endfor %}
+ </div>
+ function filterFunction() { var input, filter, ul, li, a, i;
+                         input = document.getElementById("myInput");
+                         filter = input.value.toUpperCase();
+                         div = document.getElementById("myDropdown");
+                         a = div.getElementsByTagName("option");
+                         for (i = 0; i < a.length; i++) {
+                           txtValue = a[i].textContent || a[i].innerText;
+                           if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                             a[i].style.display = "";
+                           } else {
+                             a[i].style.display = "none";
+                           }
+                         }
+                       }  -->
+<!-- <div class="mb-3">
+                <label for="exampleInputPassword1" >Recipe Cuisine</label>
+                <input type="text" id="cuis" class="form-control"  name="recipe_cuisine" placeholder="Enter recipe Cuisine"></textarea>
+              </div> -->
+{%endblock%}
